@@ -2,7 +2,7 @@ import {Min,Max, Length, IsString, IsInt } from 'class-validator';
 import { TeamEntity } from './TeamEntity';
 
 
-export class Team implements TeamEntity{
+export class TeamDto implements TeamEntity{
   
     
    id:string;

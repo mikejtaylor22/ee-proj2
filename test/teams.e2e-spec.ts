@@ -9,7 +9,7 @@ import {
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { TeamsModule } from '../src/teams/teams.module';
-import { Team } from '../src/teams/teams/team.model';
+import { TeamDto } from '../src/teams/teams/team.model';
 
 //try to mock the ValidationPipe
 // const target: ValidationPipe = new ValidationPipe({   whitelist:true,
@@ -32,7 +32,7 @@ describe('TeamsController (e2e)', () => {
   });
 
   it('(POST) to /api/team should return 200 status', () => {
-    const team = new Team('Evil Geniuses', 160, 12);
+    const team = new TeamDto('Evil Geniuses', 160, 12);
     return request(app.getHttpServer())
       .post('/api/team/')
       .send(team)
@@ -40,7 +40,7 @@ describe('TeamsController (e2e)', () => {
   });
 
   it('(GET) to /api/team/:id should return 200 status', async () => {
-    const team = new Team('Method', 150, 7);
+    const team = new TeamDto('Method', 150, 7);
     const postResponse = await request(app.getHttpServer())
       .post('/api/team/')
       .send(team);
@@ -51,7 +51,7 @@ describe('TeamsController (e2e)', () => {
   });
 
   it('(GET) to /api/team/:id should return 422 HTTP status due to invalid id  ', async () => {
-    const team = new Team('Method', 150, 7);
+    const team = new TeamDto('Method', 150, 7);
     const invalidId = 1;
     const postResponse = await request(app.getHttpServer())
       .post('/api/team/')
@@ -63,7 +63,7 @@ describe('TeamsController (e2e)', () => {
   });
 
   it('(GET) to /api/teams should return 200 status to get all teams', async () => {
-    const team = new Team('Method', 150, 7);
+    const team = new TeamDto('Method', 150, 7);
     const postResponse = await request(app.getHttpServer())
       .post('/api/team/')
       .send(team);
@@ -83,7 +83,7 @@ describe('TeamsController (e2e)', () => {
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
     });
 
-    const team = new Team('Evil Geniuses', 160, 31);
+    const team = new TeamDto('Evil Geniuses', 160, 31);
 
     return request(app.getHttpServer())
       .post('/api/team/')
@@ -92,7 +92,7 @@ describe('TeamsController (e2e)', () => {
   });
 
   it('(POST) to /api/team Should throw 422 status due to sending invalid data(numMembers cannot be greater than 500)  ', () => {
-    const team = new Team('Cloud 9', 501, 10);
+    const team = new TeamDto('Cloud 9', 501, 10);
     return request(app.getHttpServer())
       .post('/api/team/')
       .send(team)

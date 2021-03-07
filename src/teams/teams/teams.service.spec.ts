@@ -1,6 +1,6 @@
 import { InMemoryDBService } from '@nestjs-addons/in-memory-db';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Team } from './team.model';
+import { TeamDto } from './team.model';
 import { TeamsService } from './teams.service';
 
 describe('TeamsService', () => {
@@ -19,7 +19,7 @@ describe('TeamsService', () => {
 
 
   it('should create a team',  () => {
-    const team = new Team("Team Liquid",100,5)
+    const team = new TeamDto("Team Liquid",100,5)
     service.addTeam(team);
     expect(mockInMemoryDb.create).toHaveBeenCalledWith(team);
   });

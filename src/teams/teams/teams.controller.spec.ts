@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Team } from './team.model';
 import { TeamsController } from './teams.controller';
 import {TeamsService} from './teams.service';
 
