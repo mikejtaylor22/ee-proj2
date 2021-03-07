@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Body, Controller, Get, Param, Post,UnprocessableEntityException,UseFilters,ValidationPipe,ParseUUIDPipe, HttpCode, Res, ParseIntPipe  } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post,HttpCode,ParseIntPipe  } from '@nestjs/common';
 import {TeamsService} from './teams.service';
 import Team from './team.entity';
 import {HttpException,HttpStatus} from '@nestjs/common';
