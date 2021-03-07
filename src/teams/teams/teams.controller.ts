@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Body, Controller, Get, Param, Post,UnprocessableEntityException,UseFilters,ValidationPipe,ParseUUIDPipe, HttpCode, Res  } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post,UnprocessableEntityException,UseFilters,ValidationPipe,ParseUUIDPipe, HttpCode, Res, ParseIntPipe  } from '@nestjs/common';
 import {TeamsService} from './teams.service';
-import {TeamDto} from './team.model';
+import Team from './team.entity';
 import {HttpException,HttpStatus} from '@nestjs/common';
 
 
@@ -10,17 +10,17 @@ import {HttpException,HttpStatus} from '@nestjs/common';
 
 
 @Controller('api')
-export class TeamsController {
+export default class TeamsController {
 constructor(private teamService:TeamsService){}
 
     @Get('team/:id')
-   async getTeam(@Param('id', new ParseUUIDPipe({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY})) id:string):Promise<TeamDto>{
+   async getTeamById(@Param('id', new ParseIntPipe({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY})) id:number):Promise<Team>{
         return this.teamService.getSingleTeam(id);
     }
 
     @Get('teams')
     @HttpCode(HttpStatus.OK)
-    async getAllTeams():Promise<TeamDto[]>{
+    async getAllTeams():Promise<Team[]>{
         return this.teamService.getAll();
     }
 
@@ -28,8 +28,8 @@ constructor(private teamService:TeamsService){}
 
     @Post('team')
     @HttpCode(HttpStatus.CREATED)
-    async createTeam(@Body() newTeam: TeamDto){
-      return {id:this.teamService.addTeam(newTeam).id};
+    async createTeam(@Body() newTeam: Team){
+      return {id:(await this.teamService.addTeam(newTeam)).id};
      
     }
 

@@ -1,5 +1,5 @@
 import {Min,Max, Length, IsString, IsInt } from 'class-validator';
-import { TeamEntity } from './TeamEntity';
+import { TeamEntity } from './TeamEntityOld';
 
 
 export class TeamDto implements TeamEntity{
