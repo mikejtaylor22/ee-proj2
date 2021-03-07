@@ -1,28 +1,26 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import {Min,Max, Length, IsString, IsInt } from 'class-validator'; 
+import { Min, Max, IsString, IsInt } from 'class-validator';
 
 @Entity()
 export class Team {
   @PrimaryGeneratedColumn()
   public id: number;
- 
-  
-  
-  @IsString({always:true})
+
+  @IsString({ always: true })
   @Column()
-  name:string;
+  name: string;
 
   @IsInt()
   @Min(1)
   @Max(700)
   @Column()
-  numMembers:number;
-  
+  numMembers: number;
+
   @IsInt()
   @Min(0)
   @Max(50)
   @Column()
-  numCoaches:number;
+  numCoaches: number;
 }
- 
+
 export default Team;

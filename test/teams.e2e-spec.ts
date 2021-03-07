@@ -19,6 +19,10 @@ import { TeamDto } from '../src/teams/teams/team.model';
 //   disableErrorMessages:true,
 //   errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY });
 
+//This entire spec file needs refactored to mock a postgres database -
+//  When running e2e test I am getting  Cannot create a new connection named "default", because connection with such name already exist 
+// and it now has an active connection session.
+
 describe('TeamsController (e2e)', () => {
   let app: INestApplication;
 
