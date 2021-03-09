@@ -9,18 +9,27 @@ export class TeamsService {
     @InjectRepository(Team) private teamsRepository: Repository<Team>,
   ) {}
 
-  addTeam(team: Team): Promise<Team> {
-    return this.teamsRepository.save(team);
+  async addTeam(team: Team): Promise<Team> {
+    return await this.teamsRepository.save(team);
   }
 
-  getAll(): Promise<Team[]> {
-    return this.teamsRepository.find();
+  async getAll(): Promise<Team[]> {
+    return await this.teamsRepository.find();
   }
 
   async getSingleTeam(id: number): Promise<Team> {
     const team = await this.teamsRepository.findOne(id);
     if (team) {
       return team;
+    }
+    throw new HttpException('Team not found', HttpStatus.UNPROCESSABLE_ENTITY);
+  }
+
+  async deleteOne(id:number):Promise<{deleted:boolean}>{
+    const foundTeam = await this.getSingleTeam(id);  
+    if(foundTeam){
+      await this.teamsRepository.delete(id);
+      return {deleted:true};
     }
     throw new HttpException('Team not found', HttpStatus.UNPROCESSABLE_ENTITY);
   }

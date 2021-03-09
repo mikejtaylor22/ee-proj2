@@ -7,7 +7,7 @@ import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [TeamsModule,ConfigModule.forRoot({ 
-    envFilePath: ['src/docker.env','.env.development.local'],
+    envFilePath: ['src/db.env','.env.development.local'],
     validationSchema: Joi.object({
     POSTGRES_HOST: Joi.string().required(),
     POSTGRES_PORT: Joi.number().required(),
