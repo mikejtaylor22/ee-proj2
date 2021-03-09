@@ -25,12 +25,5 @@ export class TeamsService {
     throw new HttpException('Team not found', HttpStatus.UNPROCESSABLE_ENTITY);
   }
 
-  async deleteOne(id:number):Promise<{deleted:boolean}>{
-    const foundTeam = await this.getSingleTeam(id);  
-    if(foundTeam){
-      await this.teamsRepository.delete(id);
-      return {deleted:true};
-    }
-    throw new HttpException('Team not found', HttpStatus.UNPROCESSABLE_ENTITY);
-  }
+ 
 }

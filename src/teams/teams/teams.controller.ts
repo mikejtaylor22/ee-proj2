@@ -33,9 +33,5 @@ constructor(private teamService:TeamsService){}
      
     }
 
-    @Delete('team/:id')
-    async deleteTeamById(@Param('id') id:number):Promise<{ deleted: boolean }> {
-        return await this.teamService.deleteOne(id);
-    }
 
 }
