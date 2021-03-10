@@ -78,4 +78,34 @@ describe('TeamService', () => {
       expect(repo.save).toBeCalledTimes(1);
     });
   });
+  
+  describe('deleteOne', () => {
+    it('should return {deleted:true}', () => {
+      expect(service.deleteTeam('1ab5')).resolves.toEqual({ deleted:true});
+    });
+
+    it('should return {deleted:false, message:err.message}',() => {
+     const repoSpy = jest
+        .spyOn(repo, 'delete')
+        .mockRejectedValueOnce(new Error('Bad Delete Method.'));
+      expect(service.deleteTeam('2cc')).resolves.toEqual({
+        deleted:false, message:'Bad Delete Method.'
+      });
+      // expect(repoSpy).toBeCalledWith('2cc');
+      // expect(repoSpy).toBeCalledTimes(1);
+    });
+  });
+
+  describe('updateSingleTeam', () => {
+    it('should call the updateSingleTeam method', async () => {
+
+      const team = await service.updateSingleTeam('1ab5',oneTeam);
+      expect(team).toEqual(oneTeam);
+      expect(repo.update).toBeCalledTimes(1);
+      expect(repo.update).toBeCalledWith(
+         '1ab5' , { id: '1ab5' ,name: testTeam1,numMembers:20, numCoaches:5 },
+      );
+    });
+  });
+
 });
