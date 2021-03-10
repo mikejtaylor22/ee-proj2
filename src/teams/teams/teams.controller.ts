@@ -12,14 +12,22 @@ import {
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import Team from './team.entity';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import {HttpStatus } from '@nestjs/common';
 
 @Controller('api')
 export default class TeamsController {
   constructor(private teamService: TeamsService) {}
 
   @Get('team/:id')
-  async getTeamById(@Param('id',new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,}),)id: string,): Promise<Team> {
+  async getTeamById(
+    @Param(
+      'id',
+      new ParseUUIDPipe({
+        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      }),
+    )
+    id: string,
+  ): Promise<Team> {
     return await this.teamService.getSingleTeam(id);
   }
 
@@ -32,22 +40,34 @@ export default class TeamsController {
   @Post('team')
   @HttpCode(HttpStatus.CREATED)
   async createTeam(@Body() newTeam: Team) {
-
-    //the return needs to be defined in the service
-    return { id: (await this.teamService.addTeam(newTeam)).id };
+    return await this.teamService.addTeam(newTeam);
   }
 
   @Delete('team/:id')
-  async deleteTeam(@Param('id',new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,}),) id:string){
-    return this.teamService.deleteTeam(id);
-    
+  async deleteTeam(
+    @Param(
+      'id',
+      new ParseUUIDPipe({
+        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      }),
+    )
+    id: string,
+  ) {
+    return await this.teamService.deleteTeam(id);
   }
 
   @Patch('team/:id')
   @HttpCode(HttpStatus.OK)
-  async updateTeam(@Param('id',new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,}),)  id:string , @Body() team:Team):Promise<Team>{
-      return this.teamService.updateSingleTeam(id,team);
-    
+  async updateTeam(
+    @Param(
+      'id',
+      new ParseUUIDPipe({
+        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      }),
+    )
+    id: string,
+    @Body() team: Team,
+  ): Promise<Team> {
+    return await this.teamService.updateSingleTeam(id, team);
   }
-
 }

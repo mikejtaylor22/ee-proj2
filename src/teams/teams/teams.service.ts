@@ -9,12 +9,13 @@ export class TeamsService {
     @InjectRepository(Team) private teamsRepository: Repository<Team>,
   ) {}
 
-  async addTeam(team: Team): Promise<Team> {
-    return await this.teamsRepository.save(team);
+  async addTeam(team: Team): Promise<{id:string}> {
+    const addedTeam = await this.teamsRepository.save(team);
+    return {id:addedTeam.id};
   }
 
   async getAll(): Promise<Team[]> {
-      return await this.teamsRepository.find();
+    return await this.teamsRepository.find();
   }
 
   async getSingleTeam(id: string): Promise<Team> {
@@ -22,29 +23,27 @@ export class TeamsService {
     if (team) {
       return team;
     }
-    throw new HttpException('Team not found!',HttpStatus.NOT_FOUND)
+    throw new HttpException('Team not found!', HttpStatus.NOT_FOUND);
   }
 
-  async deleteTeam(id:string): Promise<{ deleted: boolean; message?: string }>{
- try{
-  const team = await this.teamsRepository.findOne(id);
-   await this.teamsRepository.delete(team.id);
-   return {deleted:true}
- } catch(err) {
-   return {deleted:false, message:err.message};
- }
-   
-  }
-
-  async updateSingleTeam(id:string,team:Team):Promise<Team>{
-    try{
-      await this.teamsRepository.update(id,team);
-      return this.getSingleTeam(id);
-    } catch(err){
-      return err.message;
+  async deleteTeam(
+    id: string,
+  ): Promise<{ deleted: boolean; message?: string }> {
+    try {
+      const team = await this.teamsRepository.findOne(id);
+      await this.teamsRepository.delete(team.id);
+      return { deleted: true };
+    } catch (err) {
+      return { deleted: false, message: err.message };
     }
   }
 
- 
- 
+  async updateSingleTeam(id: string, team: Team): Promise<Team> {
+    try {
+      await this.teamsRepository.update(id, team);
+      return this.getSingleTeam(id);
+    } catch (err) {
+      return err.message;
+    }
+  }
 }
