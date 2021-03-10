@@ -17,12 +17,12 @@ export class TeamsService {
     return await this.teamsRepository.find();
   }
 
-  async getSingleTeam(id: number): Promise<Team> {
+  async getSingleTeam(id: string): Promise<Team> {
     const team = await this.teamsRepository.findOne(id);
     if (team) {
       return team;
     }
-    throw new HttpException('Team not found', HttpStatus.UNPROCESSABLE_ENTITY);
+    throw new HttpException('Team not found', HttpStatus.NOT_FOUND);
   }
 
  

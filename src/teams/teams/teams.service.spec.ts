@@ -8,12 +8,12 @@ const testTeam1 = 'Liquid';
 
 
 const teamArray = [
-    { id:1, name: testTeam1, numMembers:20, numCoaches:5 },
-    { id:2, name: 'TSM', numMembers:50, numCoaches:1},
-    { id:3, name: 'Method', numMembers: 100, numCoaches: 7 }
+  { id:"1ab5", name: testTeam1, numMembers:20, numCoaches:5 },
+  { id:"2ct7", name: 'TSM', numMembers:50, numCoaches:1},
+  { id:"aa54", name: 'Method', numMembers: 100, numCoaches: 7 },
 ];
 
-const oneTeam = { id:1, name: testTeam1, numMembers:20, numCoaches:5};
+const oneTeam =  { id:"1ab5", name: testTeam1, numMembers:20, numCoaches:5 };
 
 describe('TeamService', () => {
   let service: TeamsService;
@@ -53,8 +53,8 @@ describe('TeamService', () => {
   describe('getSingleTeam', () => {
     it('should get a single team', () => {
       const repoSpy = jest.spyOn(repo, 'findOne');
-      expect(service.getSingleTeam(1)).resolves.toEqual(oneTeam);
-      expect(repoSpy).toBeCalledWith(1);
+      expect(service.getSingleTeam("1ab5")).resolves.toEqual(oneTeam);
+      expect(repoSpy).toBeCalledWith("1ab5");
     });
   });
  
@@ -62,7 +62,7 @@ describe('TeamService', () => {
     it('should successfully add a Team', () => {
       expect(
         service.addTeam({
-            id:1, 
+            id:"1ab5",
             name: testTeam1, 
             numMembers:20, 
             numCoaches:5
@@ -70,7 +70,7 @@ describe('TeamService', () => {
       ).resolves.toEqual(oneTeam);
       expect(repo.save).toBeCalledTimes(1);
       expect(repo.save).toBeCalledWith({
-        id:1, 
+        id:"1ab5", 
         name: testTeam1, 
         numMembers:20, 
         numCoaches:5

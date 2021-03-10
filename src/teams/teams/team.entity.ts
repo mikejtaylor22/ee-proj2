@@ -3,8 +3,8 @@ import { Min, Max, IsString, IsInt} from 'class-validator';
 
 @Entity()
 export class Team {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @IsString({ always: true })
   @Column()
@@ -12,13 +12,13 @@ export class Team {
 
   @IsInt()
   @Min(1)
-  @Max(700)
+  @Max(1000)
   @Column()
   numMembers: number;
 
   @IsInt()
   @Min(0)
-  @Max(50)
+  @Max(200)
   @Column()
   numCoaches: number;
 }
